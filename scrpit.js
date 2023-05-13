@@ -36,11 +36,14 @@ video.addEventListener('play', () => {
         
         document.getElementById("showText").innerHTML = "";
         const numberOfStudents = detections;
-        function addCode(){
-            document.getElementById("showText").innerHTML += "Aleart! More Than One Face Detected; Number Of Faces : ";
+        function moreThanOneFace(){
+            document.getElementById("showText").innerHTML += "Aleart! More Than One Face Detected!! Number Of Faces : ";
             document.getElementById("showText").innerHTML += numberOfStudents.length;
         }
 
+        function onlyOneFace(){
+            document.getElementById("showText").innerHTML += "Only One Face Detected!";
+        }
         //resizing resize-detections 5 times. 
         const resizeDetections = faceapi.resizeResults(detections, { height: 5 * video.height, width: 5 * video.width });
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
@@ -48,10 +51,11 @@ video.addEventListener('play', () => {
         // console.log(detections);
         if(detections.length > 1){
             console.log("Two face Detected");
-            addCode();
+            moreThanOneFace();
         }
         else{
             console.log("One Face Detected");
+            onlyOneFace();
         }
         
         
