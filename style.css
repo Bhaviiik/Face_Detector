@@ -19,17 +19,6 @@ canvas {
     border-radius: 10px;
 }
 
-canvas::before {
-    content: '';
-    position: absolute;
-    height: 70%;
-    width: 2px;
-    right: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #afafb6;
-}
-
 .heading {
     margin-top: 1%;
     color:rgb(255, 255, 255);
@@ -42,7 +31,6 @@ canvas::before {
 }
 
 .text {
-    /* margin-top: 25%; */
     color: red;
     font-size: large;
     display: flex;
@@ -59,14 +47,15 @@ canvas::before {
 
 @media (max-width: 950px) {
     .videoWrap {
-        width: 70%;
+        width: 94%;
+        align-items: center;
         /* padding: 30px 40px 40px 35px; */
     }
 }
 
 @media (max-width: 820px) {
     .videoWrap {
-        margin: 40px 0;
+        margin: 3%;
         height: 100%;
     }
 }

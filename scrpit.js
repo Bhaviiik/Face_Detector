@@ -8,9 +8,11 @@ Promise.all([
 ]).then(startWebcam);//this line calling startWebCam
 
 
+
+
 //startWebCam function
 function startWebcam() {
-    navigator.mediaDevices.getUserMedia({ 
+    navigator.mediaDevices.getUserMedia({
         video: true, //only video permission is accessed
         audio: false,
     })
@@ -29,37 +31,46 @@ video.addEventListener('play', () => {
     //resizing detections 5 times
     faceapi.matchDimensions(canvas, { height: 5 * video.height, width: 5 * video.width });
 
-    
+
     //repeat this every 100ms
     setInterval(async () => {
         const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
-        
+
         document.getElementById("showText").innerHTML = "";
         const numberOfStudents = detections;
-        function moreThanOneFace(){
+        function moreThanOneFace() {
             document.getElementById("showText").innerHTML += "Aleart! More Than One Face Detected!! Number Of Faces : ";
             document.getElementById("showText").innerHTML += numberOfStudents.length;
         }
 
-        function onlyOneFace(){
+        function onlyOneFace() {
             document.getElementById("showText").innerHTML += "Only One Face Detected!";
         }
+
+        function noFace() {
+            document.getElementById("showText").innerHTML += "No Face Detected!";
+        }
+
         //resizing resize-detections 5 times. 
         const resizeDetections = faceapi.resizeResults(detections, { height: 5 * video.height, width: 5 * video.width });
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizeDetections);
         // console.log(detections);
-        if(detections.length > 1){
+        if (detections.length > 1) {
             console.log("Two face Detected");
             moreThanOneFace();
         }
-        else{
+        else if (detections.length == 1) {
             console.log("One Face Detected");
             onlyOneFace();
         }
-        
-        
+        else {
+            console.log("No Face Detected");
+            noFace();
+        }
+
+
     }, 1000)
 
-    
+
 })
