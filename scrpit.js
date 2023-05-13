@@ -29,14 +29,33 @@ video.addEventListener('play', () => {
     //resizing detections 5 times
     faceapi.matchDimensions(canvas, { height: 5 * video.height, width: 5 * video.width });
 
+    
     //repeat this every 100ms
     setInterval(async () => {
         const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+        
+        document.getElementById("showText").innerHTML = "";
+        const numberOfStudents = detections;
+        function addCode(){
+            document.getElementById("showText").innerHTML += "Aleart! More Than One Face Detected; Number Of Faces : ";
+            document.getElementById("showText").innerHTML += numberOfStudents.length;
+        }
 
         //resizing resize-detections 5 times. 
         const resizeDetections = faceapi.resizeResults(detections, { height: 5 * video.height, width: 5 * video.width });
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizeDetections);
-        console.log(detections);
-    }, 100)
+        // console.log(detections);
+        if(detections.length > 1){
+            console.log("Two face Detected");
+            addCode();
+        }
+        else{
+            console.log("One Face Detected");
+        }
+        
+        
+    }, 1000)
+
+    
 })
